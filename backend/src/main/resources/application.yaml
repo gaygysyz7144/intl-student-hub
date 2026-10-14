@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: local
+  datasource:
+    url: jdbc:mysql://localhost:3306/intl_hub?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+    username: root
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
