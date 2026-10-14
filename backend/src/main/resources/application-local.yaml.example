@@ -1,0 +1,4 @@
+# Copy this file to application-local.yaml (git-ignored) and set your own password.
+spring:
+  datasource:
+    password: Study12345
