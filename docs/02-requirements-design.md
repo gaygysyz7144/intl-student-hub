@@ -40,3 +40,6 @@ Vue front end -> REST API (Spring Boot: controller, service, mapper) -> MySQL.
 | GET | /api/recommendations | Recommended posts | Yes |
 
 (Extend this table as endpoints are added.)
+
+## 6. Design decisions
+**Authentication (decided 2026-10-15):** passwords are hashed with BCrypt (spring-security-crypto). Login returns a signed JWT (HS256, jjwt, 24 h). A HandlerInterceptor checks the token on every /api/** URL except /api/auth/**. Full Spring Security is not used, to keep the configuration small; it can be added later if complex roles are needed. The JWT secret lives in the git-ignored application-local.yaml.

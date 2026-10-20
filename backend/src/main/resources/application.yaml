@@ -7,3 +7,6 @@ spring:
 mybatis:
   configuration:
     map-underscore-to-camel-case: true
+app:
+  jwt:
+    expiration-ms: 86400000

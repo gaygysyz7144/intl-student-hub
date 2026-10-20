@@ -1,4 +1,9 @@
-# Copy this file to application-local.yaml (git-ignored) and set your own password.
+# Copy this file to application-local.yaml (git-ignored) and fill in your own values.
+# Never commit the real file.
 spring:
   datasource:
-    password: Study12345
+    password: SENIN_MYSQL_SIFREN
+app:
+  jwt:
+    # at least 32 characters; generate with: openssl rand -base64 48
+    secret: REPLACE_WITH_A_LONG_RANDOM_SECRET
