@@ -10,6 +10,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.io.IOException;
 
 // AI-assisted: runs before protected controllers. Valid token -> request continues with userId and role attached.
+// Reading posts (GET /api/posts...) is public so that visitors can browse without an account.
 @Component
 public class JwtInterceptor implements HandlerInterceptor {
 
@@ -25,6 +26,9 @@ public class JwtInterceptor implements HandlerInterceptor {
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             return true; // CORS preflight carries no token
         }
+        if (isPublicRead(request)) {
+            return true;
+        }
         String header = request.getHeader("Authorization");
         if (header == null || !header.startsWith("Bearer ")) {
             reject(response);
@@ -39,6 +43,12 @@ public class JwtInterceptor implements HandlerInterceptor {
             reject(response);
             return false;
         }
+    }
+
+    private boolean isPublicRead(HttpServletRequest request) {
+        String path = request.getRequestURI();
+        return "GET".equalsIgnoreCase(request.getMethod())
+                && (path.equals("/api/posts") || path.startsWith("/api/posts/"));
     }
 
     private void reject(HttpServletResponse response) throws IOException {
