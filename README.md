@@ -13,7 +13,7 @@ Life assistance and sharing platform for new international students in China
 |---|---|
 | Backend | Java 17, Spring Boot 4.0.8, MyBatis, MySQL |
 | Frontend | Vue 3, Axios |
-| Auth | Spring Security, JWT, BCrypt |
+| Auth | BCrypt (spring-security-crypto), JWT (jjwt) + HandlerInterceptor |
 | Tools | Git/GitHub, Maven, IntelliJ IDEA |
 
 ## Repository layout
@@ -28,7 +28,7 @@ docs/       standards, requirements, tests, AI usage log, meetings, weekly repor
 ## How to run (fill in as the project grows)
 1. Create the database: `mysql -u root -p < database/schema.sql`
 2. Copy `backend/src/main/resources/application-local.yaml.example` to `application-local.yaml` and set your own password (this file is git-ignored).
-3. Backend: `cd backend && ./mvnw spring-boot:run`
+3. Backend: open `backend` in IntelliJ IDEA and run `IntlhubApplication` (there is no Maven wrapper in this project)
 4. Frontend: `cd frontend && npm install && npm run dev`
 
 ## AI usage
