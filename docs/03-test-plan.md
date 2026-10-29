@@ -22,3 +22,4 @@
 
 ## 3. Notes
 Record failures, the cause, and the fix. Link bugs to commits.
+Automated unit tests (JUnit 5 + Mockito, run from IntelliJ): AuthServiceTest (2 tests), PostServiceTest (6 tests). They cover S-02 (non-owner gets 403) at service level; manual curl tests remain the evidence for the HTTP level.
