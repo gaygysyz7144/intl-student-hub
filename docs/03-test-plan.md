@@ -3,7 +3,7 @@
 ## 1. Functional tests
 | ID | Feature | Steps | Expected | Result |
 |---|---|---|---|---|
-| T-01 | Register | POST valid user | 201, user created, password stored as hash | |
+| T-01 | Register | POST valid user | 201, user created, password stored as hash | Pass|
 | T-02 | Login | POST correct credentials | JWT returned | Pass|
 | T-03 | Create post | Authenticated POST | Post saved and visible in list | Pass|
 | T-04 | Search | Filter by category and city | Only matching posts | Pass|
