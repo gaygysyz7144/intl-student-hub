@@ -113,8 +113,11 @@ The interceptor checks the JWT and puts userId and role on the request. Controll
 | GET | /api/recommendations | Recommended posts | Yes | Planned |
 | DELETE | /api/favorites/{postId} | Remove a bookmark | Yes | Implemented |
 | GET | /api/favorites | My bookmarked posts (page, size) | Yes | Implemented |
+| GET | /api/tags | List all tags | Yes | Implemented |
+| GET | /api/users/me/tags | My interest tags | Yes | Implemented |
+| PUT | /api/users/me/tags | Replace my interest tags (body: tagIds, at most 10) | Yes | Implemented |
 
-Errors are returned as `{"error": "..."}`. Validation errors also include a `fields` object, for example `{"fields": {"title": "..."}, "error": "Validation failed"}`. Verified status codes: register 201 (duplicate 409, invalid input 400), create post 201 (invalid input 400, no token 401), update/delete someone else's post 403, missing or deleted post 404, delete 204.Update 2026-10-28: read-only post endpoints (GET /api/posts and GET /api/posts/{id}) are also public so that visitors can browse without an account; all other /api/** URLs need a valid token.Messages: sending to yourself 400, unknown receiver 404, empty content 400.
+Errors are returned as `{"error": "..."}`. Validation errors also include a `fields` object, for example `{"fields": {"title": "..."}, "error": "Validation failed"}`. Verified status codes: register 201 (duplicate 409, invalid input 400), create post 201 (invalid input 400, no token 401), update/delete someone else's post 403, missing or deleted post 404, delete 204.Update 2026-10-28: read-only post endpoints (GET /api/posts and GET /api/posts/{id}) are also public so that visitors can browse without an account; all other /api/** URLs need a valid token.Messages: sending to yourself 400, unknown receiver 404, empty content 400.Tags: unknown tag id 400.
 
 ## 6. Design decisions
 **Authentication (decided 2026-10-15):** passwords are hashed with BCrypt (spring-security-crypto). Login returns a signed JWT (HS256, jjwt, 24 h). A HandlerInterceptor checks the token on every /api/** URL except /api/auth/**. Full Spring Security is not used, to keep the configuration small; it can be added later if complex roles are needed. The JWT secret lives in the git-ignored application-local.yaml.
