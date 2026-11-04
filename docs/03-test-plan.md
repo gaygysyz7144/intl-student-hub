@@ -8,7 +8,7 @@
 | T-03 | Create post | Authenticated POST | Post saved and visible in list | Pass|
 | T-04 | Search | Filter by category and city | Only matching posts | Pass|
 | T-05 | Favorite | Bookmark a post | Appears in my favorites | Pass|
-| T-06 | Message | Send a message | Receiver can read it | |
+| T-06 | Message | Send a message | Receiver can read it | Pass|
 
 ## 2. Security and boundary tests (at least one AI test is required)
 | ID | Test | Expected | Result |
