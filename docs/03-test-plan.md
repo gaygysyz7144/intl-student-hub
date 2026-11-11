@@ -9,6 +9,7 @@
 | T-04 | Search | Filter by category and city | Only matching posts | Pass|
 | T-05 | Favorite | Bookmark a post | Appears in my favorites | Pass|
 | T-06 | Message | Send a message | Receiver can read it | Pass|
+| T-07 | Recommendations | Set interest tags, tag posts, GET /api/recommendations | Posts with shared tags, most shared first; own posts excluded | Pass |
 
 ## 2. Security and boundary tests (at least one AI test is required)
 | ID | Test | Expected | Result |
