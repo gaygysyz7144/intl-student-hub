@@ -110,7 +110,7 @@ The interceptor checks the JWT and puts userId and role on the request. Controll
 | POST | /api/favorites/{postId} | Bookmark | Yes | Implemented |
 || GET | /api/messages | My inbox: messages sent to me (page, size) | Yes | Implemented |
 | POST | /api/messages | Send a message (body: receiverId, content up to 1000 characters) | Yes | Implemented |
-| GET | /api/recommendations | Recommended posts | Yes | Planned |
+| GET | /api/recommendations | Active posts of other users that share at least one tag with my interest tags (page, size) | Yes | Implemented |
 | DELETE | /api/favorites/{postId} | Remove a bookmark | Yes | Implemented |
 | GET | /api/favorites | My bookmarked posts (page, size) | Yes | Implemented |
 | GET | /api/tags | List all tags | Yes | Implemented |
@@ -126,3 +126,4 @@ Errors are returned as `{"error": "..."}`. Validation errors also include a `fie
 **Favorites (decided 2026-10-29):** adding a post that is already a favorite and removing one that is not both succeed with 204 and change nothing (idempotent), so a double click in the UI cannot cause an error. A missing or inactive post returns 404.
 **Messages (decided 2026-11-04):** the sender always comes from the token, never from the request. A user can only read messages addressed to them: the inbox query filters by receiver_id, and there is no endpoint that returns another user's messages. Marking a message as read is not implemented yet.
 **Post tags (decided 2026-11-11):** tags are added to a post with a separate PUT /api/posts/{id}/tags instead of a tagIds field in the post request. This keeps the working create and update code and its tests unchanged. Only the owner or an admin can change the tags of a post, like for updating or deleting the post. Reading the tags is public, like reading the post.
+**Recommendations (decided 2026-11-11):** rule-based, no LLM. A post is recommended when it shares at least one tag with the user's interest tags. Posts with more shared tags come first, then newer posts. The user's own posts and inactive posts are never shown. A user without interest tags gets an empty list.
