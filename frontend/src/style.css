@@ -16,7 +16,7 @@ a { color: var(--acc); text-decoration: none; }
 .who { display: flex; gap: 8px; align-items: center; color: var(--mut); }
 .narrow { max-width: 380px; margin: 40px auto; display: flex; flex-direction: column; gap: 12px; }
 label { display: flex; flex-direction: column; gap: 4px; font-size: .9rem; color: var(--mut); }
-input, textarea { font: inherit; padding: 8px 10px; border: 1px solid var(--line);
+input, textarea, select { font: inherit; padding: 8px 10px; border: 1px solid var(--line);
   border-radius: 6px; background: var(--card); color: var(--ink); width: 100%; }
 button { font: inherit; padding: 8px 14px; border: 1px solid var(--acc); border-radius: 6px;
   background: var(--acc); color: #fff; cursor: pointer; }
@@ -25,6 +25,8 @@ button:disabled { opacity: .5; cursor: default; }
 :focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 12px 0; }
 .row input { flex: 1; min-width: 140px; }
+.row select { width: auto; }
+.wide { max-width: 100%; margin: 0; }
 .item { display: block; background: var(--card); border: 1px solid var(--line);
   border-radius: 6px; padding: 12px 14px; margin: 8px 0; color: var(--ink); }
 a.item:hover { border-color: var(--acc); }

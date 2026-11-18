@@ -1,14 +1,17 @@
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
 import { api, auth, errText } from '../api'
 
 const id = useRoute().params.id
 const post = ref(null)
 const tags = ref([])
+const allTags = ref([])
+const chosen = ref([])
 const msg = ref('')
 const err = ref('')
 const info = ref('')
+const isOwner = computed(() => post.value && post.value.authorId === auth.user?.id)
 
 onMounted(async () => {
   try {
@@ -17,10 +20,34 @@ onMounted(async () => {
     err.value = errText(e)
     return
   }
+  await loadTags()
+})
+
+async function loadTags() {
   try {
     tags.value = (await api.get(`/posts/${id}/tags`)).data
+    chosen.value = tags.value.map((t) => t.id)
+    if (isOwner.value && !allTags.value.length) allTags.value = (await api.get('/tags')).data
   } catch (e) { /* tags are optional */ }
-})
+}
+
+function toggle(tid) {
+  const i = chosen.value.indexOf(tid)
+  if (i >= 0) chosen.value.splice(i, 1)
+  else chosen.value.push(tid)
+}
+
+async function saveTags() {
+  err.value = ''
+  info.value = ''
+  try {
+    await api.put(`/posts/${id}/tags`, { tagIds: chosen.value })
+    info.value = 'Tags saved.'
+    tags.value = allTags.value.filter((t) => chosen.value.includes(t.id))
+  } catch (e) {
+    err.value = errText(e)
+  }
+}
 
 async function fav(add) {
   err.value = ''
@@ -66,7 +93,18 @@ async function send() {
       <button @click="fav(true)">Add to favorites</button>
       <button class="ghost" @click="fav(false)">Remove from favorites</button>
     </div>
-    <div v-if="post.authorId !== auth.user?.id" class="box">
+
+    <div v-if="isOwner" class="box">
+      <h2>Tags for this post</h2>
+      <div class="chips">
+        <button v-for="t in allTags" :key="t.id" :class="['chip', { on: chosen.includes(t.id) }]" @click="toggle(t.id)">
+          {{ t.name }}
+        </button>
+      </div>
+      <button :disabled="chosen.length > 10" @click="saveTags">Save tags</button>
+    </div>
+
+    <div v-else class="box">
       <h2>Message {{ post.authorName }}</h2>
       <textarea v-model="msg" rows="3" maxlength="1000" placeholder="Write your message"></textarea>
       <button :disabled="!msg.trim()" @click="send">Send message</button>

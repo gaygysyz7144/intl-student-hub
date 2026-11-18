@@ -9,7 +9,8 @@ const props = defineProps({
   empty: { type: String, default: 'Nothing here yet.' },
 })
 
-const q = ref({ keyword: '', city: '' })
+const categories = ['HOUSING', 'SECONDHAND', 'EVENT', 'HELP', 'LANGUAGE']
+const q = ref({ keyword: '', city: '', category: '' })
 const page = ref(1)
 const data = ref({ items: [], total: 0, size: 10 })
 const err = ref('')
@@ -21,6 +22,7 @@ async function load() {
     if (props.filters) {
       if (q.value.keyword) params.keyword = q.value.keyword
       if (q.value.city) params.city = q.value.city
+      if (q.value.category) params.category = q.value.category
     }
     data.value = (await api.get(props.url, { params })).data
   } catch (e) {
@@ -37,6 +39,10 @@ watch(() => props.url, () => { page.value = 1; load() }, { immediate: true })
 <template>
   <h1>{{ title }}</h1>
   <div v-if="filters" class="row">
+    <select v-model="q.category">
+      <option value="">All categories</option>
+      <option v-for="c in categories" :key="c" :value="c">{{ c }}</option>
+    </select>
     <input v-model="q.keyword" placeholder="Keyword" @keyup.enter="search" />
     <input v-model="q.city" placeholder="City" @keyup.enter="search" />
     <button @click="search">Search</button>

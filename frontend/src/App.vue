@@ -15,6 +15,7 @@ function logout() {
     <strong class="brand">Intl Student Hub</strong>
     <nav>
       <RouterLink to="/posts">Posts</RouterLink>
+      <RouterLink to="/posts/new">New post</RouterLink>
       <RouterLink to="/recommendations">For you</RouterLink>
       <RouterLink to="/favorites">Favorites</RouterLink>
       <RouterLink to="/inbox">Inbox</RouterLink>
